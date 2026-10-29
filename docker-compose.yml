@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root_local
+      MYSQL_DATABASE: webhook_api
+      MYSQL_USER: webhook
+      MYSQL_PASSWORD: webhook_local
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./libs/database/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$$MYSQL_PASSWORD mysql -u$$MYSQL_USER -h127.0.0.1 -e 'SELECT 1' $$MYSQL_DATABASE"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+volumes:
+  mysql_data:

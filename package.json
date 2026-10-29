@@ -1,0 +1,40 @@
+{
+  "name": "datability",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reliable Webhook Delivery API",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "npm run start:dev",
+    "build:dev": "npm run build",
+    "docker:up": "docker compose up -d --wait",
+    "docker:down": "docker compose down",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/apps/webhook/src/main.js",
+    "start:dev": "node --watch --require ts-node/register apps/webhook/src/main.ts",
+    "start:debug": "node --inspect --watch --require ts-node/register apps/webhook/src/main.ts",
+    "start:prod": "node dist/apps/webhook/src/main.js",
+    "migrate": "ts-node libs/database/src/migrate.ts",
+    "test": "node --require ts-node/register --test --test-concurrency=1 test/api.test.ts",
+    "test:watch": "node --watch --require ts-node/register --test --test-concurrency=1 test/api.test.ts",
+    "test:cov": "node --experimental-test-coverage --require ts-node/register --test --test-concurrency=1 test/api.test.ts",
+    "test:debug": "node --inspect-brk --require ts-node/register test/api.test.ts",
+    "test:mysql": "node --require ts-node/register --test --test-concurrency=1 test/mysql.test.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.14.0",
+    "uuid": "^11.1.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.19.13",
+    "@types/supertest": "^6.0.3",
+    "supertest": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

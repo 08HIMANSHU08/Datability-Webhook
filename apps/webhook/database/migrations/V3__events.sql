@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS events (
+  event_id VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_bin PRIMARY KEY,
+  event_type VARCHAR(64) NOT NULL,
+  payload JSON NOT NULL,
+  created_at DATETIME(3) NOT NULL DEFAULT (UTC_TIMESTAMP(3)),
+  CONSTRAINT chk_payload_object CHECK (JSON_TYPE(payload) = 'OBJECT')
+) ENGINE=InnoDB;
